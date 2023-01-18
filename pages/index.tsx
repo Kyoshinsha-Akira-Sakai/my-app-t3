@@ -40,22 +40,22 @@ export default function Home(rsBody : ProductListRSBody) {
  */
 export const getStaticProps = async () => {
 
-  console.log("==============================");
-  console.log("index.tsx getStaticProps Start");
+  //console.log("==============================");
+  //console.log("index.tsx getStaticProps Start");
 
   // next.config.jsからWebApiのURLを取得
   const url : string = getConfig(process.env.RESTURL_PRODUCTLIST);
 
   const res : Response = await fetch(url);
-  console.log('RESTURL_PRODUCTLIST:' + url);
+  //console.log('RESTURL_PRODUCTLIST:' + url);
 
   const products : Product[] = await res.json();
-  console.log("------------------------------");
-  console.log("products");
-  console.log(products);
+  //console.log("------------------------------");
+  //console.log("products");
+  //console.log(products);
 
-  console.log("index.tsx getStaticProps End");
-  console.log("==============================");
+  //console.log("index.tsx getStaticProps End");
+  //console.log("==============================");
 
   return {
     props: {

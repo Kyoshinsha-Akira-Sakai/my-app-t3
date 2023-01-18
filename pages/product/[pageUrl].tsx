@@ -1,16 +1,29 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { Product } from "../../types/product";
 import { ProductDetailRSBody } from "../../types/productDetailRSBody";
 import { getConfig } from "../../Utility/configUtility";
 
+
 const ProductDetailPage = (rsBody: ProductDetailRSBody) => {
 
-    const router = useRouter();
-
-    if (router.isFallback) {
-      <h1>Data is loading</h1>;
+    if(typeof rsBody === 'undefined') {
+        console.log('rsBody undeifined')
+        return;
     }
+
+    if(typeof rsBody.product === 'undefined') {
+        console.log('rsBody.product undeifined')
+        return;
+    }
+
+    if(typeof rsBody.product.title === 'undefined') {
+        console.log('rsBody.product.title undeifined')
+        return;
+    }
+
+    console.log(rsBody);
+    console.log(rsBody.product);
+    console.log(rsBody.product.title);
 
     return (
         <div>
@@ -20,9 +33,63 @@ const ProductDetailPage = (rsBody: ProductDetailRSBody) => {
             <p><Link href="/">戻る</Link></p>
         </div>
     )
+    
 }
 
+/*
+const ProductDetailPage = ({product}: {product : Product}) => {
+
+    return (
+        <div>
+            <h1>{product.title}</h1>
+            <p>{product.body}</p>
+            <br/>
+            <p><Link href="/">戻る</Link></p>
+        </div>
+    )
+}*/
+
 export default ProductDetailPage;
+
+// 各ページのレンダリング
+export const getStaticProps = async (context : any) => {
+    // params: {pageUrl: XX}
+    // locales:
+    // locale:
+    // defaultLocale:
+
+    console.log("==============================");
+    console.log("[pageUrl].tsx getStaticProps Start");
+    /*console.log("------------------------------");
+    console.log("context");
+    console.log(context);*/
+    const pageUrl = context.params.pageUrl;
+
+    // next.config.jsからWebApiのURLを取得
+    const url : string = getConfig(process.env.RESTURL_SEARCHPAGEURL);
+
+    const res : Response = await fetch(url + pageUrl);
+
+    /*console.log("------------------------------");
+    console.log("res");
+    console.log(res);*/
+
+    const product: Product = await res.json();
+
+    /*console.log("------------------------------");
+    console.log("product");
+    console.log(product);*/
+    console.log("------------------------------");
+    console.log("[pageUrl].tsx getStaticProps End");
+    console.log("==============================");
+
+    return {
+        props: {
+            product: product
+            //product: { productId: 1, pageUrl: 'SeizaiA', title: '製剤A', body: '製剤Aの内容。' }
+        }
+    }
+}
 
 // どんな動的pathがあるか
 export const getStaticPaths = async () => {
@@ -34,12 +101,12 @@ export const getStaticPaths = async () => {
     const url : string = getConfig(process.env.RESTURL_PRODUCTLIST);
 
     const res : Response = await fetch(url);
-    console.log('RESTURL_PRODUCTLIST:' + url);
+    //console.log('RESTURL_PRODUCTLIST:' + url);
 
     const products : any = await res.json();
-    console.log("------------------------------");
-    console.log("products");
-    console.log(products);
+    //console.log("------------------------------");
+    /*console.log("products");
+    console.log(products);*/
 
     //const paths = products.map((json: { pageUrl: string; }) => `/product/${json.pageUrl}`);
 
@@ -55,43 +122,16 @@ export const getStaticPaths = async () => {
     // 二回目のリクエスト以降はこの動きは発生しない。
     return { paths, fallback: true };
     //return { paths: [{ params: { pageUrl: 'SeizaiA' }}, { params: { pageUrl: 'SeizaiB' }}], fallback: true };
-}
-
-// 各ページのレンダリング
-export const getStaticProps = async (context : any) => {
-    // params: {pageUrl: XX}
-    // locales:
-    // locale:
-    // defaultLocale:
-
-    console.log("==============================");
-    console.log("[pageUrl].tsx getStaticProps Start");
-    console.log("------------------------------");
-    console.log("context");
-    console.log(context);
-    const pageUrl = context.params.pageUrl;
-
-    // next.config.jsからWebApiのURLを取得
-    const url : string = getConfig(process.env.RESTURL_SEARCHPAGEURL);
-
-    const res : Response = await fetch(url + pageUrl);
-    //const res : Response = await fetch(`http://localhost:3002/product/pageUrlSearch/${pageUrl}`);
-    console.log("------------------------------");
-    console.log("res");
-    console.log(res);
-
-    const json = await res.json();
-    console.log("------------------------------");
-    console.log("json");
-    console.log(json);
-    console.log("------------------------------");
-    console.log("[pageUrl].tsx getStaticProps End");
-    console.log("==============================");
-
+    //return { paths, fallback: false };
+/*
     return {
-        props: {
-            product: json
-        }
-    }
+        paths: [
+            { params: { pageUrl: 'SeizaiA' } },
+            { params: { pageUrl: 'SeizaiB' } },
+            { params: { pageUrl: 'SeizaiC' } }, 
+        ],
+    //-   fallback: false
+       fallback: true // ここを true に設定した
+      }*/
 }
 
