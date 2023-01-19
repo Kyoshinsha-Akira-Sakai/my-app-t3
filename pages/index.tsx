@@ -17,7 +17,7 @@ export default function Home(rsBody : ProductListRSBody) {
 
   return (
     <div>
-      <h1>製品一覧(SSG)</h1>
+      <h1>製品一覧(ISG)</h1>
       <ul>
         {/*
         // TODO Warning: Each child in a list should have a unique "key" prop.が発生する
