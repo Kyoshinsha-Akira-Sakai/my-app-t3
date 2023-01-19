@@ -36,6 +36,7 @@ export default function Home(rsBody : ProductListRSBody) {
           )
         }
       </ul>
+      <p><Link href="/csr">CSRページへ</Link></p>
     </div>
   )
 }
