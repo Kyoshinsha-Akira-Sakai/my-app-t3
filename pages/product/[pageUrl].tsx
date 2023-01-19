@@ -79,7 +79,7 @@ export const getStaticPaths = async () => {
     console.log("[pageUrl].tsx getStaticPaths Start");
 
     // next.config.jsからWebApiのURLを取得
-    const url : string = getConfig(process.env.RESTURL_PRODUCTLIST);
+    const url : string = getConfig(process.env.RESTURL_PRODUCTLISTPREBUILD);
 
     const res : Response = await fetch(url);
 

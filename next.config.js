@@ -19,7 +19,7 @@ module.exports = (phase) => {
   console.log(`isDev:${isDev}  isProd:${isProd}   isStaging:${isStaging}`)
 
   const env = {
-
+    // 一覧ページ用
     RESTURL_PRODUCTLIST: (() => {
       if (isDev) return 'http://localhost:3002/product'
       if (isProd|isStaging) {
@@ -27,11 +27,19 @@ module.exports = (phase) => {
       }
       return ''
     })(),
-
+    // 詳細ページ用
     RESTURL_SEARCHPAGEURL: (() => {
       if (isDev) return 'http://localhost:3002/product/pageUrlSearch/'
       if (isProd|isStaging) {
         return 'https://t67jfjuy69.execute-api.ap-northeast-1.amazonaws.com/default/ProductList/'
+      }
+      return ''
+    })(),
+    // プレビルドページのURL取得用
+    RESTURL_PRODUCTLISTPREBUILD: (() => {
+      if (isDev) return 'http://localhost:3002/productPageUrlSearch'
+      if (isProd|isStaging) {
+        return 'https://t67jfjuy69.execute-api.ap-northeast-1.amazonaws.com/default/Productlistprebuild'
       }
       return ''
     })(),
