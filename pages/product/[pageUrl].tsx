@@ -6,29 +6,14 @@ import { useRouter } from 'next/router'
 
 const ProductDetailPage = (rsBody: ProductDetailRSBody) => {
 
+    console.log("==============================");
+    console.log('ProductDetailPage Start')
+
     const router = useRouter();
     if(router.isFallback) {
         console.log('ProductDetailPage FallBack')
         return <div>Loading...</div>
     }
-
-    console.log("==============================");
-    console.log('ProductDetailPage Start')
-
-    /*if(typeof rsBody === 'undefined') {
-        console.log('rsBody undeifined')
-        return;
-    }
-
-    if(typeof rsBody.product === 'undefined') {
-        console.log('rsBody.product undeifined')
-        return;
-    }
-
-    if(typeof rsBody.product.title === 'undefined') {
-        console.log('rsBody.product.title undeifined')
-        return;
-    }*/
 
     console.log('ProductDetailPage End')
     console.log("==============================");
