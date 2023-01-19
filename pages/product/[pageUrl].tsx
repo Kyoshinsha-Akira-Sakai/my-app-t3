@@ -97,5 +97,6 @@ export const getStaticPaths = async () => {
     // ユーザー視点ではloadingの状態を少しはさんで表示される動きになる
     // 二回目のリクエスト以降はこの動きは発生しない。
     return { paths, fallback: true };
+    //return { paths, fallback: 'blocking' };
 }
 
