@@ -4,4 +4,5 @@ export type Product = {
     pageUrl: string,
     title: string,
     body: string,
+    isPreBuild: string
 }
